@@ -1,1 +1,3 @@
 vertx.deployVerticle("src/main/js/server.js");
+
+// Other possible verticles...
