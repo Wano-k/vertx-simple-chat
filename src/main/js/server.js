@@ -40,13 +40,15 @@ var eb = vertx.eventBus();
 
 // When an user wants to join...
 eb.consumer("user/join").handler(function (message) {
-	var totalMessage = "The user " + message.body() + " has joined!";
-	console.log("server : " + totalMessage);
+	var totalMessage = message.body() + " has joined!";
+	console.log("server: " + totalMessage);
 	eb.publish("user/joined", totalMessage);
 });
 
 // When a user wants to post something...
 eb.consumer("message/post").handler(function (message) {
-	console.log("server : " + message.body());
-	eb.publish("message/posted", message.body());
+	var json = message.body();
+	var totalMessage = json.userName + " said: " + json.message;
+	console.log("server: " + totalMessage);
+	eb.publish("message/posted", totalMessage);
 });

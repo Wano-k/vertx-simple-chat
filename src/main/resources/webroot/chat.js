@@ -1,3 +1,11 @@
+
+// All the possible kind of message that can be displayed in the chat
+var MessageType = {
+    Join: "join",
+    Post: "post"
+};
+Object.freeze(MessageType);
+
 window.onload = function () {
 
 	// Loading event bus
@@ -11,24 +19,25 @@ window.onload = function () {
 	var errorUserName = document.getElementById("errorUserName");
 	var containerChatHistory = document.getElementById("containerChatHistory");
 
+	// Config
+	var hasJoined = false;
+
 	// Show / Hide specific elements
 	buttonJoin.disabled = false;
+	$('#containerJoin').show();
 	$('#containerChat').hide();
-
-	// [hasJoined] Check if the user is in the chat
-	function hasJoined() {
-		return !$('#containerChat').is(":hidden"); 
-	};
 
 	// [join] When a user wants to join the chat
 	function join() {
 		var userName = inputUserName.value;
+
 		if (userName.length > 0) {
 			buttonJoin.disabled = true;
 			errorUserName.innerHTML = "";
 			$('#containerChat').show();
 			$('#containerJoin').hide();
-			eb.publish("user/join", userName);
+			hasJoined = true;
+			eb.send("user/join", userName);
 		}
 		else {
 			errorUserName.innerHTML = 
@@ -38,18 +47,25 @@ window.onload = function () {
 
 	// [sendMessage] When a user wants to send a message to the chat
 	function sendMessage() {
-		var message = textAreaMessage.innerHTML;
-
+		var userName = inputUserName.value;
+		var message = textAreaMessage.value;
+		console.log(message);
 		if (message.length > 0) {
-			eb.publish("message/post", message);
-			$('#newMessage').val("");
+			var jsonPost = {
+				"userName": userName,
+				"message": message
+			};
+			eb.send("message/post", jsonPost);
+			textAreaMessage.value = "";
 		}
 	};
 
-	// [writeInChat message] Write the [messag] in the chat history
-	function writeInChat(message) {
+	// [writeInChat message type] Write the [messag] in the chat history
+	// according to the [type] of message.
+	function writeInChat(message, type) {
 		if (hasJoined) {
-			containerChatHistory.innerHTML += "<p>" + message + "</p>";
+			containerChatHistory.innerHTML += 
+				"<p " + 'id="' + type + '">' + message + "</p>";
 		}
 	};
 
@@ -58,15 +74,16 @@ window.onload = function () {
 
 		// When a user joined the chat
 		eb.registerHandler("user/joined", function (err, msg) {
-			writeInChat(msg.body);
+			writeInChat(msg.body, MessageType.Join);
 		});
 
 		// When a user posted a message
 		eb.registerHandler("message/posted", function (err, msg) {
-			writeInChat(msg.body);
+			writeInChat(msg.body, MessageType.Post);
 		});
 
 		// Adding listeners
 		buttonJoin.addEventListener("click", join);
+		buttonSendMessage.addEventListener("click", sendMessage);
 	};
 }
