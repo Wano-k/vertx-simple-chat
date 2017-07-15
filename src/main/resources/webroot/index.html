@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<script src="http://cdn.sockjs.org/sockjs-0.3.4.min.js"></script>
+	<script src='vertx-eventbus.js'></script>
+	<script>
+		window.onload = function () {
+			var eb = new EventBus("/eventbus/");
+			var inputUserName = document.querySelector("input[name=inputUserName]");
+			var textAreaMessage = document.getElementById("newMessage");
+			var buttonSendMessage = document.getElementById("sendMessage");
+			var buttonJoin = document.getElementById("buttonJoin");
+
+			eb.onopen = function () {
+				function join(){
+					var userName = inputUserName.value;
+					if (userName.length > 0) {
+						eb.publish("user/join", userName);
+					}
+					else{
+						// TODO
+					}
+				};
+
+				function sendMessage() {
+					var message = textAreaMessage.innerHTML;
+
+					if (message.length > 0) {
+						eb.publish("message/post", message);
+						$('#newMessage').val("");
+					}
+				};
+
+				eb.registerHandler("user/joined", function (err, msg) {
+					console.log("received :" + msg.body);
+				});
+
+				eb.registerHandler("message/posted", function (err, msg) {
+					console.log("received :" + msg.body);
+				});
+
+				buttonJoin.addEventListener("click", join);
+			};
+		}
+	</script>
+
+	<body>
+		<h1>Awesome chat</h1>
+
+		<div id="containerJoin">
+			<p>
+				Name: <input type="text" name="inputUserName" value="Anonymous"/>
+				<button id="buttonJoin">Join</button>
+			</p>
+		</div>
+
+		<div id="containerUsersList"></div>
+
+		<div id="containerChat">
+			<h2>Chat</h2>
+			<div id="containerChatHistory"></div>
+			<textarea rows="4" cols="50" id="newMessage" disabled></textarea>
+			<button id="sendMessage" disabled>Send</button>
+		</div>
+	</body>
+</html>

@@ -1,9 +1,7 @@
 # A simple chat using Vert.x-web-js and sockJS
 
-----
 The server and the client are both written in JavaScript.
 
-----
 ## Running with Eclipse IDE
 
 ### Configuration:
@@ -23,7 +21,6 @@ The server and the client are both written in JavaScript.
 
 Click on Run on the toolbar.
 
-----
 ## Running with command lines
 
 ### Configuration:
