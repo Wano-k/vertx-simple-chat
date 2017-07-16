@@ -2,7 +2,8 @@
 // All the possible kind of message that can be displayed in the chat
 var MessageType = {
 	Join: 0,
-	Post: 1
+	Post: 1,
+	Leave: 2
 };
 Object.freeze(MessageType);
 
