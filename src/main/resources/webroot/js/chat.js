@@ -1,8 +1,8 @@
 
 // All the possible kind of message that can be displayed in the chat
 var MessageType = {
-    Join: "join",
-    Post: "post"
+	Join: 0,
+	Post: 1
 };
 Object.freeze(MessageType);
 
@@ -64,8 +64,19 @@ window.onload = function () {
 	// according to the [type] of message.
 	function writeInChat(message, type) {
 		if (hasJoined) {
+			var typo;
+			switch (type){
+				case MessageType.Join:
+					typo = "text-success"; break;
+				case MessageType.Join:
+					typo = "text-muted"; break;
+				default:
+					typo = "text-muted"; break;
+					break;
+			}
+
 			containerChatHistory.innerHTML += 
-				"<p " + 'id="' + type + '">' + message + "</p>";
+				"<p " + 'class="' + typo + '">' + message + "</p>";
 		}
 	};
 

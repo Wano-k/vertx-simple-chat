@@ -1,30 +1,46 @@
 <!DOCTYPE html>
 <html>
-	<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+	<head>
+		<title>Awesome Chat</title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/styles.css">
+	</head>
+
 	<script src="http://cdn.sockjs.org/sockjs-0.3.4.min.js"></script>
-	<script src='vertx-eventbus.js'></script>
-	<script src='chat.js'></script>
+	<script src='js/vertx-eventbus.js'></script>
+	<script src='js/chat.js'></script>
 
 	<body>
-		<h1>Awesome chat</h1>
+		<div id="banner">
+			<h1>Awesome Chat</h1>
+		</div>
 
 		<div id="containerJoin">
-			<h2>Join the chat room</h2>
-			<p>
+			<h2 class="text-primary">Join the chat room</h2>
+			<p class="text-muted">
 				Name: 
 				<input type="text" name="inputUserName" value="Anonymous"/>
-				<button id="buttonJoin">Join</button>
-				<p id="errorUserName"></p>
+				<button type="button" id="buttonJoin" class="btn btn-primary">
+					Join room
+				</button>
+				<p class="text-danger" id="errorUserName"></p>
 			</p>
 		</div>
 
 		<div id="containerUsersList"></div>
 
 		<div id="containerChat">
-			<h2>Chat</h2>
+			<h2 class="text-primary">Welcome to the chat room!</h2>
 			<div id="containerChatHistory"></div>
 			<textarea rows="4" cols="50" id="newMessage"></textarea>
-			<button id="sendMessage">Send</button>
+			<div>
+				<button type="button" id="sendMessage" class="btn btn-primary">
+					Send
+				</button>
+			</div>
 		</div>
+
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	    <script src="js/bootstrap.min.js"></script>
 	</body>
 </html>
