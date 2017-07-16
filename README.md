@@ -19,7 +19,7 @@ The server and the client are both written in JavaScript.
 
 ### Run:
 
-Click on Run on the toolbar.
+Click on Run on the toolbar and go to `http://localhost:8080/` in your favorite browser.
 
 ## Running with command lines
 
@@ -32,3 +32,4 @@ Download Vert.x 3.3.2 [here](https://bintray.com/vertx/downloads/distribution/3.
 ### Run:
 
     vertx run src/main/js/main.js
+and go to `http://localhost:8080/` in your favorite browser.
