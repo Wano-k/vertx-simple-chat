@@ -30,7 +30,11 @@ h2 {
 
 #containerChatHistory {
 	text-align: left;
-	margin-left: 37%;
-	margin-right: 37%;
+	margin-left: 26%;
+	margin-right: 26%;
 	word-wrap: break-word;
+}
+
+div #textAreaMessage {
+	margin-bottom: 1em;
 }

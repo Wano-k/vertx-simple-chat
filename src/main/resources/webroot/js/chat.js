@@ -13,9 +13,10 @@ window.onload = function () {
 
 	// Getting the useful elements
 	var inputUserName = document.querySelector("input[name=inputUserName]");
-	var textAreaMessage = document.getElementById("newMessage");
-	var buttonSendMessage = document.getElementById("sendMessage");
-	var buttonJoin = document.getElementById("buttonJoin");
+	var textAreaMessage = document.getElementById("textAreaMessage");
+	var buttonSendMessage = document.getElementById("buttonSendMessage");
+	var buttonLeaveRoom = document.getElementById("buttonLeaveRoom");
+	var buttonJoinRoom = document.getElementById("buttonJoinRoom");
 	var errorUserName = document.getElementById("errorUserName");
 	var containerChatHistory = document.getElementById("containerChatHistory");
 
@@ -23,19 +24,21 @@ window.onload = function () {
 	var hasJoined = false;
 
 	// Show / Hide specific elements
-	buttonJoin.disabled = false;
+	buttonJoinRoom.disabled = false;
 	$('#containerJoin').show();
 	$('#containerChat').hide();
 
 	// [join] When a user wants to join the chat
-	function join() {
+	function joinRoom() {
 		var userName = inputUserName.value;
 
 		if (userName.length > 0) {
-			buttonJoin.disabled = true;
+			buttonJoinRoom.disabled = true;
 			errorUserName.innerHTML = "";
 			$('#containerChat').show();
 			$('#containerJoin').hide();
+			containerChatHistory.innerHTML = "";
+			textAreaMessage.value = "";
 			hasJoined = true;
 			eb.send("user/join", userName);
 		}
@@ -48,8 +51,7 @@ window.onload = function () {
 	// [sendMessage] When a user wants to send a message to the chat
 	function sendMessage() {
 		var userName = inputUserName.value;
-		var message = textAreaMessage.value;
-		console.log(message);
+		var message = strip(textAreaMessage.value);
 		if (message.length > 0) {
 			var jsonPost = {
 				"userName": userName,
@@ -60,25 +62,42 @@ window.onload = function () {
 		}
 	};
 
+	// [leaveRoom] When a user wants to leave the room
+	function leaveRoom() {
+		var userName = inputUserName.value;
+		buttonJoinRoom.disabled = false;
+		$('#containerChat').hide();
+		$('#containerJoin').show();
+		hasJoined = false;
+		eb.send("user/leave", userName);
+	};
+
 	// [writeInChat message type] Write the [messag] in the chat history
 	// according to the [type] of message.
 	function writeInChat(message, type) {
 		if (hasJoined) {
-			var typo;
+			var typo = "text-muted";
+
 			switch (type){
 				case MessageType.Join:
 					typo = "text-success"; break;
 				case MessageType.Join:
 					typo = "text-muted"; break;
-				default:
-					typo = "text-muted"; break;
-					break;
+				case MessageType.Leave:
+					typo = "text-warning"; break;
 			}
 
 			containerChatHistory.innerHTML += 
 				"<p " + 'class="' + typo + '">' + message + "</p>";
 		}
 	};
+
+	// [strip] Return a text without the html content.
+	function strip(html) {
+		var tmp = document.createElement("DIV");
+		tmp.innerHTML = html;
+		return tmp.textContent || tmp.innerText;
+	}
 
 	// When Event bus is connected to the server...
 	eb.onopen = function () {
@@ -93,8 +112,14 @@ window.onload = function () {
 			writeInChat(msg.body, MessageType.Post);
 		});
 
+		// When a user leaved the chat
+		eb.registerHandler("user/leaved", function (err, msg) {
+			writeInChat(msg.body, MessageType.Leave);
+		});
+
 		// Adding listeners
-		buttonJoin.addEventListener("click", join);
+		buttonJoinRoom.addEventListener("click", joinRoom);
 		buttonSendMessage.addEventListener("click", sendMessage);
+		buttonLeaveRoom.addEventListener("click", leaveRoom);
 	};
 }

@@ -18,9 +18,9 @@
 		<div id="containerJoin">
 			<h2 class="text-primary">Join the chat room</h2>
 			<p class="text-muted">
-				Name: 
+				Username:  
 				<input type="text" name="inputUserName" value="Anonymous"/>
-				<button type="button" id="buttonJoin" class="btn btn-primary">
+				<button type="button" id="buttonJoinRoom" class="btn btn-success">
 					Join room
 				</button>
 				<p class="text-danger" id="errorUserName"></p>
@@ -30,11 +30,14 @@
 		<div id="containerUsersList"></div>
 
 		<div id="containerChat">
-			<h2 class="text-primary">Welcome to the chat room!</h2>
+			<h2 class="text-primary">Welcome to the chat room! 
+			<button type="button" id="buttonLeaveRoom" class="btn btn-warning">
+					Leave room
+				</button></h2>
 			<div id="containerChatHistory"></div>
-			<textarea rows="4" cols="50" id="newMessage"></textarea>
+			<textarea rows="3" cols="100" id="textAreaMessage"></textarea>
 			<div>
-				<button type="button" id="sendMessage" class="btn btn-primary">
+				<button type="button" id="buttonSendMessage" class="btn btn-primary">
 					Send
 				</button>
 			</div>
