@@ -16,25 +16,6 @@ h1 {
 	font-size: 42px;
 }
 
-h2 {
-	margin-bottom: 1em;
-}
-
 #containerJoin {
 	text-align: center;
-}
-
-#containerChat {
-	text-align: center;
-}
-
-#containerChatHistory {
-	text-align: left;
-	margin-left: 26%;
-	margin-right: 26%;
-	word-wrap: break-word;
-}
-
-div #textAreaMessage {
-	margin-bottom: 1em;
 }

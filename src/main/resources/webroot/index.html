@@ -8,6 +8,7 @@
 
 	<script src="http://cdn.sockjs.org/sockjs-0.3.4.min.js"></script>
 	<script src='js/vertx-eventbus.js'></script>
+	<script src='js/customElements/container-chat.js'></script>
 	<script src='js/chat.js'></script>
 
 	<body>
@@ -27,21 +28,7 @@
 			</p>
 		</div>
 
-		<div id="containerUsersList"></div>
-
-		<div id="containerChat">
-			<h2 class="text-primary">Welcome to the chat room! 
-			<button type="button" id="buttonLeaveRoom" class="btn btn-warning">
-					Leave room
-				</button></h2>
-			<div id="containerChatHistory"></div>
-			<textarea rows="3" cols="100" id="textAreaMessage"></textarea>
-			<div>
-				<button type="button" id="buttonSendMessage" class="btn btn-primary">
-					Send
-				</button>
-			</div>
-		</div>
+		<container-chat id="containerChat"></container-chat>
 
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	    <script src="js/bootstrap.min.js"></script>
