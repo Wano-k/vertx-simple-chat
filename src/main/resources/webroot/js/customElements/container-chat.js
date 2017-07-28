@@ -76,6 +76,10 @@ class ContainerChat extends HTMLElement {
 		this.buttonLeaveRoom.addEventListener("click", this.leaveRoom(this));
 	}
 
+	get eventBus() {
+		return this.eb;
+	}
+
 	set eventBus(value) {
 		this.eb = value;
 		var base = this;
@@ -126,9 +130,8 @@ class ContainerChat extends HTMLElement {
 	// [leaveRoom base] When a user wants to leave the room
 	leaveRoom(base) {
 		return function() {
-			//buttonJoinRoom.disabled = false;
+			base.join.leaveRoom();
 			base.hidden = true;
-			//$('#containerJoin').show();
 			base.hasJoined = false;
 			base.eb.send("user/leave", base.userName);
 		}
@@ -136,7 +139,6 @@ class ContainerChat extends HTMLElement {
 
 	// [writeInChat message type] Write the [messag] in the chat history
 	writeInChat(message, type) {
-		console.log(this.eb);
 		if (this.hasJoined) {
 			var typo = "text-muted";
 
@@ -149,10 +151,17 @@ class ContainerChat extends HTMLElement {
 					typo = "text-warning"; break;
 			}
 
-			console.log("b");
 			this.containerChatHistory.innerHTML += 
 				"<p " + 'class="' + typo + '">' + message + "</p>";
 		}
+	}
+
+	// [join userName] When a user wants to join the chat
+	joinRoom(userName) {
+		this.hidden = false;
+		this.hasJoined = true;
+		this.userName = userName;
+		this.reset();
 	}
 }
 

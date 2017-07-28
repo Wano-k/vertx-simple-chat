@@ -8,6 +8,7 @@
 
 	<script src="http://cdn.sockjs.org/sockjs-0.3.4.min.js"></script>
 	<script src='js/vertx-eventbus.js'></script>
+	<script src='js/customElements/container-join.js'></script>
 	<script src='js/customElements/container-chat.js'></script>
 	<script src='js/chat.js'></script>
 
@@ -16,18 +17,7 @@
 			<h1>Awesome Chat</h1>
 		</div>
 
-		<div id="containerJoin">
-			<h2 class="text-primary">Join the chat room</h2>
-			<p class="text-muted">
-				Username:  
-				<input type="text" name="inputUserName" value="Anonymous"/>
-				<button type="button" id="buttonJoinRoom" class="btn btn-success">
-					Join room
-				</button>
-				<p class="text-danger" id="errorUserName"></p>
-			</p>
-		</div>
-
+		<container-join id="containerJoin"></container-join>
 		<container-chat id="containerChat"></container-chat>
 
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
