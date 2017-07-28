@@ -10,6 +10,7 @@
 	<script src='js/vertx-eventbus.js'></script>
 	<script src='js/customElements/container-join.js'></script>
 	<script src='js/customElements/container-chat.js'></script>
+	<script src='js/customElements/awesome-chat.js'></script>
 	<script src='js/chat.js'></script>
 
 	<body>
@@ -17,8 +18,10 @@
 			<h1>Awesome Chat</h1>
 		</div>
 
-		<container-join id="containerJoin"></container-join>
-		<container-chat id="containerChat"></container-chat>
+		<awesome-chat id="chat">
+			<container-join></container-join>
+			<container-chat></container-chat>
+		</awesome-chat>
 
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	    <script src="js/bootstrap.min.js"></script>

@@ -37,7 +37,7 @@ class ContainerChat extends HTMLElement {
 				    margin-left: auto;
 				    margin-right: auto;
 				}
-			</style>`
+			</style>`;
 
 		// Header
 		var title = document.createElement('h2');

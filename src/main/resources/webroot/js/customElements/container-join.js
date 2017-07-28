@@ -18,7 +18,7 @@ class ContainerJoin extends HTMLElement {
 				button {
 					margin-left: 1em;
 				}
-			</style>`
+			</style>`;
 
 		// Header
 		var title = document.createElement('h2');
