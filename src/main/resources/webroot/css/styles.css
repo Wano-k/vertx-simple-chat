@@ -20,6 +20,11 @@ h2 {
 	margin-bottom: 1em;
 }
 
+#content {
+	display: flex;
+	justify-content: center;
+}
+
 #containerJoin {
 	text-align: center;
 }
@@ -30,11 +35,14 @@ h2 {
 
 #containerChatHistory {
 	text-align: left;
-	margin-left: 26%;
-	margin-right: 26%;
 	word-wrap: break-word;
+	min-width: 150px;
+	max-width: 500px;
 }
 
 div #textAreaMessage {
 	margin-bottom: 1em;
+	width: 100%;
+	min-width: 150px;
+	max-width: 500px;
 }
