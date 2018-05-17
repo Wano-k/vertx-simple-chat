@@ -2,8 +2,7 @@
 // All the possible kind of message that can be displayed in the chat
 var MessageType = {
 	Join: 0,
-	Post: 1,
-	Leave: 2
+	Post: 1
 };
 Object.freeze(MessageType);
 
@@ -16,7 +15,6 @@ window.onload = function () {
 	var inputUserName = document.querySelector("input[name=inputUserName]");
 	var textAreaMessage = document.getElementById("textAreaMessage");
 	var buttonSendMessage = document.getElementById("buttonSendMessage");
-	var buttonLeaveRoom = document.getElementById("buttonLeaveRoom");
 	var buttonJoinRoom = document.getElementById("buttonJoinRoom");
 	var errorUserName = document.getElementById("errorUserName");
 	var containerChatHistory = document.getElementById("containerChatHistory");
@@ -63,16 +61,6 @@ window.onload = function () {
 		}
 	};
 
-	// [leaveRoom] When a user wants to leave the room
-	function leaveRoom() {
-		var userName = inputUserName.value;
-		buttonJoinRoom.disabled = false;
-		$('#containerChat').hide();
-		$('#containerJoin').show();
-		hasJoined = false;
-		eb.send("user/leave", userName);
-	};
-
 	// [writeInChat message type] Write the [messag] in the chat history
 	// according to the [type] of message.
 	function writeInChat(message, type) {
@@ -84,8 +72,6 @@ window.onload = function () {
 					typo = "text-success"; break;
 				case MessageType.Join:
 					typo = "text-muted"; break;
-				case MessageType.Leave:
-					typo = "text-warning"; break;
 			}
 
 			containerChatHistory.innerHTML += 
@@ -113,14 +99,8 @@ window.onload = function () {
 			writeInChat(msg.body, MessageType.Post);
 		});
 
-		// When a user leaved the chat
-		eb.registerHandler("user/leaved", function (err, msg) {
-			writeInChat(msg.body, MessageType.Leave);
-		});
-
 		// Adding listeners
 		buttonJoinRoom.addEventListener("click", joinRoom);
 		buttonSendMessage.addEventListener("click", sendMessage);
-		buttonLeaveRoom.addEventListener("click", leaveRoom);
 	};
 }

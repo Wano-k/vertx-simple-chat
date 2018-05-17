@@ -13,9 +13,6 @@ var options = {
 		},
 		{
 			"address" : "message/post"
-		},
-		{
-			"address" : "user/leave"
 		}
 	],
 	"outboundPermitteds" : [
@@ -24,9 +21,6 @@ var options = {
 		},
 		{
 			"address" : "message/posted"
-		},
-		{
-			"address" : "user/leaved"
 		}
 	]
 };
@@ -69,11 +63,4 @@ eb.consumer("message/post").handler(function (message) {
 	var totalMessage = getTime() + json.userName + " said: " + json.message;
 	console.log("server: " + totalMessage);
 	eb.publish("message/posted", totalMessage);
-});
-
-// When a user wants to leave the room...
-eb.consumer("user/leave").handler(function (message) {
-	var totalMessage = message.body() + " has leaved the room!";
-	console.log("server: " + totalMessage);
-	eb.publish("user/leaved", totalMessage);
 });
